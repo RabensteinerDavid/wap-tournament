@@ -29,4 +29,20 @@ export class DbConnectionService {
         
         return DbConnectionService.instance;
     }
+
+    async findUserByEmail(email) {
+        return await this.db.collection("users").findOne({ email });
+    }
+
+    async findUserByUsername(username) {
+        return await this.db.collection("users").findOne({ username })
+    }
+
+    async findUser(id) {
+        return await this.db.collection("users").findOne({id})
+    }
+
+    async storeUser(user) {
+        return await this.db.collection("users").insertOne(user);
+    }
 }
