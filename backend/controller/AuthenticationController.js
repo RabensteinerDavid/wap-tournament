@@ -68,7 +68,7 @@ export class AuthenticationController {
             }
 
             // Generate JWT token
-            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '6h' });
             res.status(200).json({ token });
         } catch (error) {
             res.status(500).json({ error: 'Internal server error' });
