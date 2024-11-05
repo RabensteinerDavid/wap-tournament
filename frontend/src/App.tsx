@@ -1,10 +1,12 @@
 import './App.css'
+import { SingleElimination } from './components/types-elimination'
 
-function App() {
-
+function App () {
   return (
     <>
-      <h1>UI Tournament</h1>
+      <div className='elimination-wrapper'>
+        <SingleElimination />
+      </div>
     </>
   )
 }
