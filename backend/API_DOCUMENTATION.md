@@ -118,6 +118,35 @@ Possible Errors<br>
 }
 ```
 
+### Delete Tournament
+Route: DELETE localhost:3000/api/v1/tournament/ID<br>
+Instead of ID, use the Object id string from the tournament<br>
+You can only delete your own tournaments<br>
+Request: No request body needed<br>
+Response: One tournament -> Like the response in create tournament<br>
+```
+{
+    "acknowledged": true,
+    "deletedCount": 1
+}
+```
+Possible Errors<br>
+```
+{
+    "error": "Forbidden"
+}
+```
+```
+{
+    "error": "Tournament not found"
+}
+```
+```
+{
+    "error": "User not found"
+}
+```
+
 ### Create Tournament
 
 Route: POST localhost:3000/api/v1/tournament<br> 

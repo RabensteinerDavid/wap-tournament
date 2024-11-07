@@ -125,5 +125,30 @@ export class WtpController {
             console.log(e)
             res.status(500).json({ error: 'Internal server error' });
         }
+     }
+    
+    async deleteTournament(req, res) {
+        try {
+            const user = await this.dbCommunicatorService.findUserByEmail(req.user.email); // from the token middleware
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const tournament = await this.dbCommunicatorService.getTournament(req.params.id);
+            
+            if (tournament) {
+                if (tournament.userId.equals(user._id)) {
+                    const result = await this.dbCommunicatorService.deleteTournament(req.params.id);
+                    res.send(result);
+                } else {
+                    return res.status(403).json({ error: "Forbidden" });
+                }
+            } else {
+                return res.status(404).json({ error: "Tournament not found" });
+            }
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({ error: 'Internal server error' });
+        }
     }
 }
