@@ -102,4 +102,28 @@ export class WtpController {
             this.generateBrackets(bracketTwo, amount, numRounds, brackets, date);   
         }
     }
+
+    async getTournaments(req, res) {
+        try {
+            const tournaments = await this.dbCommunicatorService.getTournaments();
+            res.send(tournaments);
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+     async getTournament(req, res) {
+        try {
+            const tournament = await this.dbCommunicatorService.getTournament(req.params.id);
+            if (tournament) {
+                res.send(tournament);
+            } else {
+                return res.status(404).json({ error: "Tournament not found" });
+            }
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
 }
