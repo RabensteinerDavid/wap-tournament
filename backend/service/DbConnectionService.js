@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { ObjectId } from "mongodb";
 
 export class DbConnectionService {
     db;
@@ -48,5 +49,19 @@ export class DbConnectionService {
 
     async storeTournament(tournament) {
         return await this.db.collection("tournaments").insertOne(tournament);
+    }
+
+    async getTournaments() {
+        const tournamentsCursor = await this.db.collection("tournaments").find({});
+        return tournamentsCursor.toArray();
+    }
+
+    async getTournament(id) {
+        if (ObjectId.isValid(id)) {
+            const objectId = new ObjectId(id);
+            return await this.db.collection("tournaments").findOne({ _id: objectId });
+        } else {
+            return null;
+        }
     }
 }

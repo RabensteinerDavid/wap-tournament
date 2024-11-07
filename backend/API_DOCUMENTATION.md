@@ -98,6 +98,26 @@ Headers<br>
 
 ## WTP Routes
 
+### Get Tournaments
+
+Route: GET localhost:3000/api/v1/tournaments<br>
+Request: No request body needed<br>
+Response: Array of Tournaments -> Like the response in create tournament<br>
+Possible Errors<br>
+
+### Get Tournaments
+
+Route: GET localhost:3000/api/v1/tournament/ID<br>
+Instead of ID, use the Object id string from the tournament
+Request: No request body needed<br>
+Response: One tournament -> Like the response in create tournament<br>
+Possible Errors<br>
+```
+{
+    "error": "Tournament not found"
+}
+```
+
 ### Create Tournament
 
 Route: POST localhost:3000/api/v1/tournament<br> 
