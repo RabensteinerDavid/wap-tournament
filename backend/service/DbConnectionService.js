@@ -31,11 +31,11 @@ export class DbConnectionService {
     }
 
     async findUserByEmail(email) {
-        return await this.db.collection("users").findOne({ email: email });
+        return await this.db.collection("users").findOne({ email });
     }
 
     async findUserByUsername(username) {
-        return await this.db.collection("users").findOne({ username: username })
+        return await this.db.collection("users").findOne({ username })
     }
 
     async findUser(id) {

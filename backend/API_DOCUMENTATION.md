@@ -2,12 +2,107 @@
 # API Documentation
 
 This document provides detailed explanations of the API endpoints and how to interact with them.
+The API follows he schema: host:port/api/v1/...
+
+## Authentication Routes
+
+### Register
+
+Route: POST localhost:3000/api/v1/register<br>
+Request<br>
+```
+{
+    "username": "DummNeuge",
+    "email": "d.neugebauer@gmx.at",
+    "password": "123Spiegelei"
+}
+```
+
+Response<br>
+```
+{
+    "message": "User registered successfully"
+}
+```
+
+Possible Errors<br>
+```
+{
+    "error": "Email already exists"
+}
+```
+```
+{
+    "error": "Username already exists"
+}
+```
+No headers needed
+
+### Login
+
+Route: POST localhost:3000/api/v1/login<br>
+Request<br>
+```
+{
+    "email": "d.neugebauer@gmx.at",
+    "password": "123Spiegelei"
+}
+```
+
+Response<br>
+```
+{
+    "token": "API_ACCESS_TOKEN"
+}
+```
+
+Possible Errors<br>
+```
+{
+    "error": "Invalid credentials"
+}
+```
+
+No headers needed
+
+### Get User
+
+
+Route: GET localhost:3000/api/v1/user<br>
+Request: No request JSON needed
+
+Response<br>
+```
+{
+    "username": "DummNeuge",
+    "email": "d.neugebauer@gmx.at"
+}
+```
+
+Possible Errors<br>
+```
+{
+    "error": "Unauthorized"
+}
+```
+
+Headers<br>
+<table> 
+<tr> 
+<th>Name</th> <th>Value</th>
+</tr> 
+<tr> 
+<td>Authorization</td> <td>API_ACCESS_TOKEN </td>
+</table>
+<br>
 
 ## WTP Routes
 
 ### Create Tournament
 
+Route: POST localhost:3000/api/v1/tournament<br> 
 Request<br>
+
 ```
 {
 "title":  "Das ist ein Wettbewerb",
@@ -15,10 +110,11 @@ Request<br>
 "date": "2024-11-06T00:00:00Z"
 }
 ```
+
 Headers<br>
 <table> 
 <tr> 
-<th>Name</th> <th>Value 2</th>
+<th>Name</th> <th>Value</th>
 </tr> 
 <tr> 
 <td>Authorization</td> <td>API_ACCESS_TOKEN </td>
