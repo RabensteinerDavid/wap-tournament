@@ -47,6 +47,10 @@ app.get(apiPrefix + '/tournament/:id', tokenMiddlewareService.verifyToken, async
   await wtpController.getTournament(req, res);
 });
 
+app.delete(apiPrefix + '/tournament/:id', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.deleteTournament(req, res);
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });

@@ -64,4 +64,13 @@ export class DbConnectionService {
             return null;
         }
     }
+
+    async deleteTournament(id) {
+        if (ObjectId.isValid(id)) {
+            const objectId = new ObjectId(id);
+            return await this.db.collection("tournaments").deleteMany({ _id: objectId })
+        } else {
+            return null;
+        }
+    }
 }
