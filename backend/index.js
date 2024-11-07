@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.SERVER_PORT;
-const wtpController = WtpController.getInstance();
+const wtpController = await WtpController.getInstance();
 const authenticationController = await AuthenticationController.getInstance();
 const tokenMiddlewareService = TokenMiddlewareService.getInstance()
 
@@ -33,7 +33,11 @@ app.post(apiPrefix + '/login', async (req, res) => {
 
 app.get(apiPrefix + '/user', tokenMiddlewareService.verifyToken, async (req, res) => {
   await authenticationController.getUser(req, res);
-})
+});
+
+app.post(apiPrefix + '/tournament', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.createTournament(req, res);
+});
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

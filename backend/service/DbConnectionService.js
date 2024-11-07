@@ -31,11 +31,11 @@ export class DbConnectionService {
     }
 
     async findUserByEmail(email) {
-        return await this.db.collection("users").findOne({ email });
+        return await this.db.collection("users").findOne({ email: email });
     }
 
     async findUserByUsername(username) {
-        return await this.db.collection("users").findOne({ username })
+        return await this.db.collection("users").findOne({ username: username })
     }
 
     async findUser(id) {
@@ -44,5 +44,9 @@ export class DbConnectionService {
 
     async storeUser(user) {
         return await this.db.collection("users").insertOne(user);
+    }
+
+    async storeTournament(tournament) {
+        return await this.db.collection("tournaments").insertOne(tournament);
     }
 }
