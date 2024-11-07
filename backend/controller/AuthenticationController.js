@@ -78,7 +78,7 @@ export class AuthenticationController {
     async getUser(req, res) {
         try {
             // Fetch user details using the decoded token
-            const user = await this.dbCommunicatorService.findUser(req.user.id); // from the token middleware
+            const user = await this.dbCommunicatorService.findUserByEmail(req.user.email); // from the token middleware
             if (!user) {
             return res.status(404).json({ error: 'User not found' });
             }
