@@ -5,7 +5,7 @@ function App () {
   return (
     <>
       <div className='elimination-wrapper'>
-        <SingleElimination />
+        <SingleElimination id="672e02dc9f2e0a54b3bb53c7"/>
       </div>
     </>
   )
