@@ -1,6 +1,8 @@
 #root {
-  height: 100vh;
-  width: 100vw;
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
+}
+
+body{
+  margin: 0;
 }
