@@ -10,13 +10,13 @@ export const theme = createTheme({
           },
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: 'white'
+              borderColor: '#7b00ffc9'
             },
             '&:hover fieldset': {
-              borderColor: 'white'
+              borderColor: '#7b00ffc9'
             },
             '&.Mui-focused fieldset': {
-              borderColor: 'white'
+              borderColor: '#7b00ffc9'
             },
             '& input': {
               color: 'white'
@@ -38,11 +38,23 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          color: 'black',
-          backgroundColor: 'white',
+          color: 'white',
+          backgroundColor: '#7b00ffc9',
           '&:hover': {
-            backgroundColor: '#e0e0e0'
+            backgroundColor: '#7b00ff5a'
           }
+        }
+      }
+    }
+  }
+})
+
+export const themeHeader = createTheme({
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#7b00ff5a'
         }
       }
     }

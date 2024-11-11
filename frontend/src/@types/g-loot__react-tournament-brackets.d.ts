@@ -166,6 +166,15 @@ declare module '@g-loot/react-tournament-brackets' {
   export type DoubleElimLeaderboardProps = BracketLeaderboardProps & {
     matches: { upper: Match[]; lower: Match[] };
   };
+  
+  export interface AuthContextType {
+    isLoggedIn: boolean;
+    login: (email: string, password: string) => Promise<{ success: boolean; message?: string }>;
+    signup: (username: string, email: string, password: string) => Promise<{ success: boolean; message?: string }>;
+    logout: () => void;
+  }
+
+  type Props = { children: React.ReactNode };
 
   export const SingleEliminationBracket: React.FC<SingleElimLeaderboardProps>;
   export const DoubleEliminationBracket: React.FC<DoubleElimLeaderboardProps>;
