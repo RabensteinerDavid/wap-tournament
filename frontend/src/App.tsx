@@ -1,14 +1,16 @@
+import { RouterProvider } from 'react-router-dom'
 import './App.css'
-import { SingleElimination } from './components/types-elimination'
+import router from './routes/router'
 
 function App () {
   return (
-    <>
-      <div className='elimination-wrapper'>
-        <SingleElimination id="672e02dc9f2e0a54b3bb53c7"/>
-      </div>
-    </>
-  )
+    <RouterProvider
+      router={router}
+      future={{
+        v7_startTransition: true,
+      }}
+    />
+  );
 }
 
 export default App

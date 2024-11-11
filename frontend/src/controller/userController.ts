@@ -1,0 +1,58 @@
+import api from '../service/axiosInstance';
+
+const token = localStorage.getItem('token');
+
+export const logout = () => {
+    localStorage.removeItem('token');
+}
+
+export const isLoggedIn = () => {
+    return token !== null;
+}
+
+export const login = async (email: string, password: string): Promise<{ success: boolean, data?: any, message?: string }> => {
+    return api
+      .post('/login', {
+        email,
+        password
+      })
+      .then((response) => {
+        const data = response.data;
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          return { success: true, data: data.token };
+        } else {
+          return { success: false, message: data.error || "Login failed" };
+        }
+      })
+      .catch((error) => {
+        // console.error("Error during login:", error);
+        return { success: false, message: error.response.data.error || "Network error occurred." };
+      });
+  };
+  
+  export const signup = async (username: string, email: string, password: string): Promise<{ success: boolean, data?: any, message?: string }> => {
+    return api
+      .post('/register', {
+        username,
+        email,
+        password
+      })
+      .then((response) => {
+        const data = response.data;
+  
+        if (data.message) {
+          return { success: true, data: data.message };
+        }
+  
+        if (data.error) {
+          return { success: false, message: data.error };
+        }
+  
+        return { success: false, message: "Register failed" };
+      })
+      .catch((error) => {
+        // console.error("Error during register:", error);
+        return { success: false, message: error.response.data.error || "Network error occurred." };
+      });
+  };

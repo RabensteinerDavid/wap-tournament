@@ -34,7 +34,7 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
   }, [id]);
 
   return (
-    <>
+    <div className='elimination-wrapper'>
       {tournaments.length > 0 ? (
         <SingleEliminationBracket
           matches={tournaments}
@@ -78,6 +78,6 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
       ) : (
         <div className='loading'>Loading...</div>
       )}
-    </>
+    </div>
   );
 };

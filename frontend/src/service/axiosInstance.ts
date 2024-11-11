@@ -11,14 +11,17 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'authorization': `Bearer ${token}`
   }
 });
+
+if (token) {
+  api.defaults.headers['Authorization'] = `Bearer ${token}`;
+}
 
 api.interceptors.response.use(
   response => response,
   error => {
-    console.error('API Error:', error);
+    // console.error('API Error:', error);
     return Promise.reject(error);
   }
 );
