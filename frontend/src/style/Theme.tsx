@@ -60,3 +60,16 @@ export const themeHeader = createTheme({
     }
   }
 })
+
+export const themeAccordion = createTheme({
+  components: {
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#1e1e1e',
+          color: 'white',
+        }
+      }
+    }
+  }
+})

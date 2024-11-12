@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import {
   login as loginService,
-  signup as signupService
+  signup as signupService,
+  getUser as userService
 } from '../controller/userController'
 import { AuthContextType, Props } from '@g-loot/react-tournament-brackets'
+import api from '../service/axiosInstance'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -31,8 +33,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     try {
       const result = await loginService(email, password)
       if (result.success && result.data) {
-        console.log(result.data)
         localStorage.setItem('token', result.data)
+        api.defaults.headers['Authorization'] = `Bearer ${result.data}`;
         setIsLoggedIn(true)
         return { success: true }
       } else {
@@ -60,13 +62,24 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+const getUser = async (): Promise<{ success: boolean; data?: any; message?: string }> => {
+    try {
+      const response = await userService();
+      return response;
+    }
+    catch (error) {
+      console.error('Fehler beim Laden der Turniere:', error)
+      throw error
+    }
+  }
+
   const logout = () => {
     localStorage.removeItem('token')
     setIsLoggedIn(false)
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, signup, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, signup, logout, getUser }}>
       {children}
     </AuthContext.Provider>
   )
