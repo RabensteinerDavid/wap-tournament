@@ -56,3 +56,23 @@ export const signup = async (
       }
     })
 }
+
+export const getUser = async (): Promise<{ success: boolean; data?: any; message?: string }> => {
+  return await api
+    .get('/user')
+    .then(response => {
+      const data = response.data
+      if (!data.error) {
+        return { success: true, data: {username: data.username, email: data.email, id: data.id} }
+      } else {
+        return { success: false, message: data.error || 'Login failed' }
+      }
+    })
+    .catch(error => {
+      // console.error("Error during login:", error);
+      return {
+        success: false,
+        message: error.response.data.error || 'Network error occurred.'
+      }
+    })
+}
