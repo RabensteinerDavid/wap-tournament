@@ -76,6 +76,7 @@ Response<br>
 {
     "username": "ExampleUsername",
     "email": "example.username@gmx.at",
+	"id": "123456"
 }
 ```
 
