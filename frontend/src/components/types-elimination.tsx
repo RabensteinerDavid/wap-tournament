@@ -22,6 +22,11 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
   }
 
   useEffect(() => {
+    if (!id) {
+      console.error('Keine Turnier-ID vorhanden!');
+      return; 
+    }
+
     const fetchTournaments = async () => {
       try {
         const data = await getTournament(id);
@@ -76,7 +81,7 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
           )}
         />
       ) : (
-        <div className='loading'>Loading...</div>
+        <div className='loading'>No tournament found...</div>
       )}
     </div>
   );

@@ -24,7 +24,7 @@ declare module '@g-loot/react-tournament-brackets' {
   };
 
   export interface SingleEliminationProps {
-    id: string;  
+    id: string | undefined; 
   }
 
   export type Options = {

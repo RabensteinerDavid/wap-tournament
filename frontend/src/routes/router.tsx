@@ -9,7 +9,10 @@ import Signup from '../components/sign-up'
 import Layout from '../components/layout'
 import Dashboard from '../components/dashboard'
 import Protected from './protected'
-import { SingleElimination } from '../components/types-elimination'
+import CreateTournament from '../components/create-tournament'
+import EditTournament from '../components/edit-tournament'
+import ViewTournament from '../components/view-tournament'
+import ViewTournaments from '../components/view-tournaments'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,9 +20,12 @@ const router = createBrowserRouter(
       <Route element={<Protected />}>
         {/* insert protected routes here */}
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/create-tournament' element={<CreateTournament />} />
+        <Route path='/edit-tournament/:id' element={<EditTournament />} />
         {/* Example route for the preview of the elimnation pages */}
-        <Route path='/example-page' element={<SingleElimination id="672e02dc9f2e0a54b3bb53c7"/> } />
       </Route>
+      <Route path='/view-tournament/:id' element={<ViewTournament />} />
+      <Route path='/view-tournaments' element={<ViewTournaments />} />
       <Route path='home' element={<Home />} />
       <Route path='signin' element={<Signin />} />
       <Route path='signup' element={<Signup />} />
