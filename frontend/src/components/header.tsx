@@ -27,9 +27,6 @@ const Header = () => {
               <Button color='inherit' component={Link} to='/dashboard'>
                 Dashboard
               </Button>
-              <Button color='inherit' component={Link} to='/example-page'>
-                Example
-              </Button>
               <Button color='inherit' onClick={logout}>
                 Logout
               </Button>
