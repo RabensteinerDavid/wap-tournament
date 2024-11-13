@@ -55,3 +55,11 @@
   background-color: var(--second-color) !important;
   color: white !important;
 }
+
+.css-nnwbsv-MuiPaper-root-MuiAlert-root .MuiAlert-icon{
+  color: white !important;
+}
+
+.css-nnwbsv-MuiPaper-root-MuiAlert-root{
+  background-color: #d3302f !important;
+}

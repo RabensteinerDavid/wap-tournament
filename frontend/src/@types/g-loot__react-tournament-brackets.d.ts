@@ -196,13 +196,18 @@ declare module '@g-loot/react-tournament-brackets' {
   interface DeleteModalProps {
     tournament_id: string
     tournament_title: string
-    handleDeleteMessage: (message: string) => void
+    handleDeleteMessage: (message: DeleteResponse) => void
     openSnackbarDeleteMessage: () => void
   }
 
   interface EditModalProps {
     tournament_id: string
     tournament_title: string
+  }
+
+  interface DeleteResponse {
+    error: boolean;
+    message: string;
   }
 
   export const SingleEliminationBracket: React.FC<SingleElimLeaderboardProps>
