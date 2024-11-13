@@ -19,12 +19,14 @@ import DeleteModal from './ui/delete-modal'
 import { useAuth } from '../utils/auth'
 import EditModal from './ui/edit-modal'
 import FloatingButton from './ui/floating-button'
+import { DeleteResponse } from '@g-loot/react-tournament-brackets'
 
 const Dashboard = () => {
   const { getUser } = useAuth()
   const [tournaments, setTournaments] = useState<any[]>([])
   const [message, setMessage] = useState('')
   const [open, setOpen] = useState(false)
+  const [success, setSucces] = useState(false)
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -38,10 +40,11 @@ const Dashboard = () => {
       }
     }
     fetchTournaments()
-  }, [])
+  }, [tournaments])
 
-  const handleDeleteMessage = async (message: string) => {
-    setMessage(message)
+  const handleDeleteMessage = async (response: DeleteResponse) => {
+    setMessage(response.message)
+    setSucces(!response.error)
   }
 
   const openSnackbarDeleteMessage = () => {
@@ -63,14 +66,23 @@ const Dashboard = () => {
     <div className='dashboard-wrapper'>
       <h1>Dashboard</h1>
       <Snackbar open={open} autoHideDuration={10}>
-        <Alert
-          onClose={closeDeleteMessage}
-          sx={{ width: '100%', backgroundColor: '#7b00ff5a', color: 'white' }}
-        >
-          Tournament deleted successfully
-        </Alert>
+        {success ? (
+          <Alert
+            onClose={closeDeleteMessage}
+            sx={{ width: '100%', backgroundColor: '#7b00ff5a', color: 'white' }}
+          >
+            {message}
+          </Alert>
+        ) : (
+          <Alert
+            onClose={closeDeleteMessage}
+            severity='error'
+            sx={{ width: '100%', backgroundColor: '#FF0E00', color: 'white' }}
+          >
+            {message}
+          </Alert>
+        )}
       </Snackbar>
-      {message && <p className='dashboard-message'>{message}</p>}
       <div className='tournaments'>
         <ThemeProvider theme={themeAccordion}>
           {tournaments

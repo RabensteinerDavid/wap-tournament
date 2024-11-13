@@ -26,15 +26,10 @@ export default function DeleteModal ({
   }
 
   const deleteTournament = async () => {
+    const response = await deleteTournamentsByID(tournament_id)
     setOpen(false)
     openSnackbarDeleteMessage()
-    // Todo: use the id to delete the tournament
-    const response = await deleteTournamentsByID('tournament_id')
-    if (response.error) {
-      handleDeleteMessage(response.error)
-    } else {
-      handleDeleteMessage('Tournament deleted successfully')
-    }
+    handleDeleteMessage(response)
   }
 
   return (
