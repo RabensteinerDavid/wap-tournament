@@ -210,6 +210,12 @@ declare module '@g-loot/react-tournament-brackets' {
     message: string;
   }
 
+  type CreateTournament = {
+    title: string;
+    participants: string[];
+    date: string; 
+  };
+
   export const SingleEliminationBracket: React.FC<SingleElimLeaderboardProps>
   export const DoubleEliminationBracket: React.FC<DoubleElimLeaderboardProps>
   export const Match: React.FC<MatchComponentProps>

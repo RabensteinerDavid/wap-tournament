@@ -1,4 +1,4 @@
-import { Tournament } from '@g-loot/react-tournament-brackets'
+import { CreateTournament, Tournament } from '@g-loot/react-tournament-brackets'
 import api from '../service/axiosInstance'
 import axios from 'axios'
 
@@ -31,6 +31,18 @@ export const deleteTournamentsByID = async (id: string): Promise<any> => {
     if (!response.data.error) {
       return { error: false, message: 'Tournament deleted successfully' };
     }
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return { error: true, message: error.response.data?.error || 'An error occurred' };
+    }
+    return { error: true, message: 'An unexpected error occurred' };
+  }
+};
+
+export const createTournament = async (tournament: CreateTournament): Promise<any> => {
+  try {
+    const response = await api.post('/tournament', tournament)
+    return response.data
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return { error: true, message: error.response.data?.error || 'An error occurred' };

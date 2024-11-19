@@ -37,7 +37,7 @@
 }
 
 .dashboard-message{
-  color: var(--second-color)
+  color: var(--main-color)
 }
 
 .css-1b7cly9-MuiPaper-root-MuiAlert-root .MuiAlert-icon {
@@ -52,7 +52,7 @@
 
 .css-djw9hb-MuiButtonBase-root-MuiFab-root{
   
-  background-color: var(--second-color) !important;
+  background-color: var(--main-color) !important;
   color: white !important;
 }
 
