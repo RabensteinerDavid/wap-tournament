@@ -51,6 +51,26 @@ app.delete(apiPrefix + '/tournament/:id', tokenMiddlewareService.verifyToken, as
   await wtpController.deleteTournament(req, res);
 });
 
+app.patch(apiPrefix + '/tournament/:id/addpoints/:groupIndex/:memberIndex', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.addPointsToGroupMember(req, res);
+});
+
+app.patch(apiPrefix + '/tournament/:id/finishgroup', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.finishGroupPhase(req, res);
+});
+
+app.patch(apiPrefix + '/tournament/:id/returntogroup', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.returnToGroupPhase(req, res);
+});
+
+app.patch(apiPrefix + '/tournament/:id/bracket/:bracketId/winner/:participantId', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.setWinnerOfBracket(req, res);
+});
+
+app.patch(apiPrefix + '/tournament/:id/bracket/:bracketId/resetwinners', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.resetWinnersInBracket(req, res);
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
