@@ -1,9 +1,67 @@
 .create-tournament-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    text-align: center;
-    flex-direction: column;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
+  text-align: center;
+  flex-direction: column;
+  margin-bottom: 5vh;
+}
+
+.create-tournament-input-title,
+.create-tournament-input-participant {
+  width: 100%;
+}
+
+.create-tournament-wrapper-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  width: 50vw;
+}
+
+.create-tournament-button {
+  width: 100%;
+  height: 50px;
+}
+
+.delete-tournament-button-participant {
+  width: 20vw;
+  height: 100%;
+}
+
+.participant-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 57px;
+}
+
+.create-tournament-wrapper-title {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.create-tournament-wrapper-title-input {
+  width: 100%;
+}
+
+.css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: var(--main-color) !important;
+  color: white;
+}
+
+.create-tournament-list{
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow-y: auto;
+  width: 100%; 
+  gap: 20px;
+  padding-top: 10px;
+}

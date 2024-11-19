@@ -52,20 +52,19 @@ const Dashboard = () => {
   }
 
   const closeDeleteMessage = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: SnackbarCloseReason
   ) => {
     if (reason === 'clickaway') {
       return
     }
-    event.preventDefault()
     setOpen(false)
   }
 
   return (
     <div className='dashboard-wrapper'>
       <h1>Dashboard</h1>
-      <Snackbar open={open} autoHideDuration={10}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={closeDeleteMessage}>
         {success ? (
           <Alert
             onClose={closeDeleteMessage}
