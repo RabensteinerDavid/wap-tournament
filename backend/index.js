@@ -23,6 +23,10 @@ app.get(apiPrefix + '/', async (req, res) => {
   wtpController.test(req, res);
 });
 
+/* ############################################
+            AUTHENTICATION ROUTES              
+############################################ */
+
 app.post(apiPrefix + '/register', async (req, res) => {
   await authenticationController.register(req, res);
 });
@@ -34,6 +38,10 @@ app.post(apiPrefix + '/login', async (req, res) => {
 app.get(apiPrefix + '/user', tokenMiddlewareService.verifyToken, async (req, res) => {
   await authenticationController.getUser(req, res);
 });
+
+/* ############################################
+                  WTP ROUTES                 
+############################################ */
 
 app.post(apiPrefix + '/tournament', tokenMiddlewareService.verifyToken, async (req, res) => {
   await wtpController.createTournament(req, res);
@@ -69,6 +77,10 @@ app.patch(apiPrefix + '/tournament/:id/bracket/:bracketId/winner/:participantId'
 
 app.patch(apiPrefix + '/tournament/:id/bracket/:bracketId/resetwinners', tokenMiddlewareService.verifyToken, async (req, res) => {
   await wtpController.resetWinnersInBracket(req, res);
+});
+
+app.put(apiPrefix + '/tournament/:id', tokenMiddlewareService.verifyToken, async (req, res) => {
+  await wtpController.updateTournament(req, res);
 });
 
 app.listen(port, () => {
