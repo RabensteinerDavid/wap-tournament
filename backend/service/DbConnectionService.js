@@ -31,12 +31,35 @@ export class DbConnectionService {
         return DbConnectionService.instance;
     }
 
+    async storeRefreshToken(email, refreshToken) {
+        await this.db.collection("refresh-tokens").insertOne({ email, refreshToken });
+    }
+
+    async verifyRefreshToken(email, refreshToken) {
+        const token = await this.db.collection("refresh-tokens").findOne({ email, refreshToken });
+        return !!token;
+    }
+    
     async findUserByEmail(email) {
         return await this.db.collection("users").findOne({ email: email });
     }
 
     async findUserByUsername(username) {
         return await this.db.collection("users").findOne({ username: username })
+    }
+
+    async findUserByVerificationToken(verifyToken) {
+        return await this.db.collection("users").findOne({
+            "verificationToken.token": verifyToken
+        });
+    }
+
+    async updateUser(user) {
+        const objectId = new ObjectId(user._id);
+        const filter = { _id: objectId };
+        const update = { $set: user };
+
+        return await this.db.collection("users").updateOne(filter, update);
     }
 
     async findUser(id) {
