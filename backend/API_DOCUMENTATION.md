@@ -52,7 +52,8 @@ Request<br>
 Response<br>
 ```
 {
-    "token": "API_ACCESS_TOKEN"
+    "token": API_ACCESS_TOKEN,
+	"refreshToken": API_REFRESH_TOKEN
 }
 ```
 
@@ -60,6 +61,87 @@ Possible Errors<br>
 ```
 {
     "error": "Invalid credentials"
+}
+```
+
+No headers needed
+
+### Verify user
+
+Route: PATCH localhost:3000/api/v1/verify<br>
+Request<br>
+```
+{
+    "verificationToken": USER_VERIFICATION_TOKEN
+}
+```
+
+Response<br>
+```
+{
+    "acknowledged": true,
+    "modifiedCount": 1,
+    "upsertedId": null,
+    "upsertedCount": 0,
+    "matchedCount": 1
+}
+```
+
+Possible Errors<br>
+```
+{
+    "error": "Verification token expired"
+}
+```
+```
+{
+    "error": "User not found"
+}
+```
+```
+{
+    "error": "Internal server error"
+}
+```
+
+No headers needed
+
+### Refresh token
+
+Route: PATCH localhost:3000/api/v1/refresh-token<br>
+Request<br>
+```
+{
+    "refreshToken": API_REFRESH_TOKEN
+}
+```
+
+Response<br>
+```
+{
+    "accessToken": API_ACCESS_TOKEN
+}
+```
+
+Possible Errors<br>
+```
+{
+    "error": "Verification token expired"
+}
+```
+```
+{
+    "error": "Invalid refresh token"
+}
+```
+```
+{
+    "error": "Refresh token required"
+}
+```
+```
+{
+    "error": "Token expired"
 }
 ```
 

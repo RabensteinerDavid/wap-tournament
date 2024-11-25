@@ -35,8 +35,16 @@ app.post(apiPrefix + '/login', async (req, res) => {
   await authenticationController.login(req, res);
 });
 
+app.post(apiPrefix + '/refresh-token', async (req, res) => {
+    await authenticationController.refreshAccessToken(req, res);
+});
+
 app.get(apiPrefix + '/user', tokenMiddlewareService.verifyToken, async (req, res) => {
   await authenticationController.getUser(req, res);
+});
+
+app.patch(apiPrefix + '/verify', async (req, res) => {
+  await authenticationController.verifyUser(req, res);
 });
 
 /* ############################################
