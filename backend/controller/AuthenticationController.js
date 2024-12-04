@@ -69,7 +69,7 @@ export class AuthenticationController {
             // Create a new user
             const user = {
                 username: req.body.username,
-                email: req.body.email,
+                email: req.body.email.toLowerCase(),
                 password: hashedPassword,
                 isActive: false,
                 verificationToken: verificationToken
@@ -97,6 +97,10 @@ export class AuthenticationController {
             const passwordMatch = await bcrypt.compare(req.body.password, user.password);
             if (!passwordMatch) {
                 return res.status(401).json({ error: 'Invalid credentials' });
+            }
+
+            if (!user.isActive) {
+                return res.status(403).json({ error: 'User account is not active' });
             }
 
             // Generate Access Token
