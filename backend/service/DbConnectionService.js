@@ -41,7 +41,7 @@ export class DbConnectionService {
     }
     
     async findUserByEmail(email) {
-        return await this.db.collection("users").findOne({ email: email });
+        return await this.db.collection("users").findOne({ email: email.toLowerCase() });
     }
 
     async findUserByUsername(username) {
