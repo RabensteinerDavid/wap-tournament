@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import {
+  acctivateAccount as accountActivationService,
   login as loginService,
   signup as signupService,
   getUser as userService
@@ -73,13 +74,28 @@ const getUser = async (): Promise<{ success: boolean; data?: any; message?: stri
     }
   }
 
+  const accountActivation = async (verificationToken: string): Promise<{ success: boolean; data?: any; message?: string }> => {
+    try {
+      const response = await accountActivationService(verificationToken);
+      if (response.success) {
+        return { success: true }
+      } else {
+        return { success: false, message: response.message || 'Activation failed' }
+      }
+    }
+    catch (error) {
+      console.error('Fehler beim Laden der Turniere:', error)
+      throw error
+    }
+  }
+
   const logout = () => {
     localStorage.removeItem('token')
     setIsLoggedIn(false)
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, signup, logout, getUser }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, signup, logout, getUser, accountActivation }}>
       {children}
     </AuthContext.Provider>
   )

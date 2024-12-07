@@ -13,6 +13,7 @@ import CreateTournament from '../components/create-tournament'
 import EditTournament from '../components/edit-tournament'
 import ViewTournament from '../components/view-tournament'
 import ViewTournaments from '../components/view-tournaments'
+import AccountActivation from '../components/account-activation'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path='/view-tournament/:id' element={<ViewTournament />} />
       <Route path='/view-tournaments' element={<ViewTournaments />} />
+      <Route path="/activate" element={<AccountActivation />} />
       <Route path='home' element={<Home />} />
       <Route path='signin' element={<Signin />} />
       <Route path='signup' element={<Signup />} />

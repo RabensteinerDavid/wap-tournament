@@ -177,6 +177,16 @@ declare module '@g-loot/react-tournament-brackets' {
     ) => Promise<{ success: boolean; message?: string }>
     logout: () => void
     getUser: () => Promise<{ success: boolean; data?: any; message?: string }>
+    accountActivation: (
+      token: string
+    ) => Promise<AccountActivationResponse>
+  }
+
+  interface AccountActivationResponse {
+    success: boolean
+    data?: any 
+    message?: string 
+    error?: string 
   }
 
   type Props = { children: React.ReactNode }

@@ -12,6 +12,7 @@ const Signin = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
+  const [active, setActive] = useState<boolean>(false)
 
   const handleSignin = async () => {
     setError('')
@@ -19,6 +20,11 @@ const Signin = () => {
       try {
         const response = await login(email, password)
         if (!response.success) {
+          if (response.message === 'User account is not active') {
+            setActive(true)
+          } else {
+            setActive(false)
+          }
           setError(response.message || 'An error occurred during login.')
         } else {
           navigate('/dashboard')
@@ -55,7 +61,16 @@ const Signin = () => {
                 setPassword(event.target.value)
               }}
             />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {!active && error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && active && (
+              <p className='switch-signup'>
+                Your account is not activated yet. <br />Please{' '}
+                <a className='activation-link' href='/activate'>
+                  activate your account
+                </a>{' '}
+                to proceed.
+              </p>
+            )}
             <Button onClick={handleSignin} variant='contained'>
               Login
             </Button>
