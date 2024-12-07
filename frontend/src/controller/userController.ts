@@ -76,3 +76,24 @@ export const getUser = async (): Promise<{ success: boolean; data?: any; message
       }
     })
 }
+
+export const acctivateAccount = async (verificationToken: string): Promise<{ success: boolean; data?: any; message?: string }> => {
+  return await api
+    .patch('/verify',{
+      verificationToken
+    })
+    .then(response => {
+      const data = response.data
+      if (!data.error) {
+        return { success: true, data: "Activation successfully" }
+      } else {
+        return { success: false, message: data.error || 'Login failed' }
+      }
+    })
+    .catch(error => {
+      return {
+        success: false,
+        message: error.response.data.error || 'Network error occurred.'
+      }
+    })
+}
