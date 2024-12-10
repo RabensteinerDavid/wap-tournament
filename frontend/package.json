@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@g-loot/react-tournament-brackets": "^1.0.31-rc",
     "@mui/icons-material": "^6.1.6",
-    "@mui/material": "^6.1.6",
+    "@mui/material": "^6.1.8",
     "@mui/x-date-pickers": "^7.22.2",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.7",
