@@ -29,22 +29,24 @@ const Dashboard = () => {
   const [success, setSucces] = useState(false)
 
   useEffect(() => {
-    const fetchTournaments = async () => {
-      try {
-        const user = await getUser()
-        const userID = user.data.id
-        const data = await getTournamentsByID(userID)
-        setTournaments(data)
-      } catch (err) {
-        console.error('Fehler beim Laden der Turniere:', err)
-      }
-    }
     fetchTournaments()
-  }, [tournaments])
+  }, [])
+
+  const fetchTournaments = async () => {
+    try {
+      const user = await getUser()
+      const userID = user.data.id
+      const data = await getTournamentsByID(userID)
+      setTournaments(data)
+    } catch (err) {
+      console.error('Fehler beim Laden der Turniere:', err)
+    }
+  }
 
   const handleDeleteMessage = async (response: DeleteResponse) => {
     setMessage(response.message)
     setSucces(!response.error)
+    fetchTournaments()
   }
 
   const openSnackbarDeleteMessage = () => {

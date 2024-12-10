@@ -12,7 +12,7 @@ export const login = async (
     .then(response => {
       const data = response.data
       if (data.token) {
-        return { success: true, data: data.token }
+        return { success: true, data: {token: data.token, refreshToken: data.refreshToken} }
       } else {
         return { success: false, message: data.error || 'Login failed' }
       }
