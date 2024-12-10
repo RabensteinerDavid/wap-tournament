@@ -2,6 +2,9 @@ import { RouterProvider } from 'react-router-dom'
 import './App.css'
 import router from './routes/router'
 import { AuthProvider } from './utils/auth'
+import { setRouter } from './controller/navigationController';
+
+setRouter(router); 
 
 function App () {
   return (

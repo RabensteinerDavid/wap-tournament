@@ -34,8 +34,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     try {
       const result = await loginService(email, password)
       if (result.success && result.data) {
-        localStorage.setItem('token', result.data)
-        api.defaults.headers['Authorization'] = `Bearer ${result.data}`;
+        localStorage.setItem('refreshToken', result.data.refreshToken)
+        localStorage.setItem('token', result.data.token)
+        api.defaults.headers['Authorization'] = `Bearer ${result.data.token}`;
         setIsLoggedIn(true)
         return { success: true }
       } else {
