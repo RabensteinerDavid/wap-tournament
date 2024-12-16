@@ -19,10 +19,6 @@ export class WtpController {
         return this.instance;
     }
 
-    test(req, res) {
-        res.send("Server test");
-    }
-
     async createTournament(req, res) {
         try {
             // validate the request data
@@ -51,7 +47,7 @@ export class WtpController {
             
             // store tournament and return tournament with generated id
             const insertInfo = await this.dbCommunicatorService.storeTournament(tournament);
-            res.send(tournament);
+            res.status(201).json(tournament);
         } catch (e) {
             res.status(500).json({ error: 'Internal server error' });
         }
