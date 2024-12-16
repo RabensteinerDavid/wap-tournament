@@ -19,10 +19,6 @@ app.use(cors());
 
 const apiPrefix = "/api/v1";
 
-app.get(apiPrefix + '/', async (req, res) => {
-  wtpController.test(req, res);
-});
-
 /* ############################################
             AUTHENTICATION ROUTES              
 ############################################ */
