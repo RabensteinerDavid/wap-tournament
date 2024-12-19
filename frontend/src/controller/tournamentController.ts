@@ -16,8 +16,6 @@ export const getTournamentGroups = async (id: string): Promise<any[]> => {
   try {
     const response = await api.get<Tournament>(`/tournament/${id}`)
     if (response.data && response.data.groups) {
-      console.log('Turnier gefunden:', response.data.title);  // Gibt den Titel des Turniers aus
-      console.log('Gruppen:', response.data.groups); // Gibt die Gruppen aus
     return response.data.groups
     } else {
       console.log('Keine Gruppen im Turnier gefunden.');
@@ -33,12 +31,9 @@ export const getTournamentGroups = async (id: string): Promise<any[]> => {
 export const getTournamentsByID = async (userID: string): Promise<Tournament[]> => {
   try {
     const response = await api.get(`/tournaments`)
-
-    console.log(response)
     const filteredTournaments = response.data.filter(
       (tournament: Tournament) => tournament.userId === userID
     )
-    console.log(filteredTournaments)
     return filteredTournaments
   } catch (error) {
     console.error('Fehler beim Laden der Turniere:', error)
@@ -71,3 +66,13 @@ export const createTournament = async (tournament: CreateTournament): Promise<an
     return { error: true, message: 'An unexpected error occurred' };
   }
 };
+
+export const getTournament = async (id: string): Promise<Tournament> => {
+  try {
+    const response = await api.get(`/tournament/${id}`)
+    return response.data
+  } catch (error) {
+    console.error('Fehler beim Laden der Turniere:', error)
+    throw error
+  }
+}

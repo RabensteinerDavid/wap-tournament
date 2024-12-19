@@ -16,11 +16,9 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
   const finalWidth = (size.width ?? 0) * 2.5 / 3
   const finalHeight = (size.height ?? 0) * 2.5 / 3
   const [tournaments, setTournaments] = useState<any[]>([]);
-  const [groups, setGroups] = useState<any[]>([]);
 
   const onMatchClickTest = (top: Participant): void => {
     alert(`Match clicked: ${top.name} ${top.id}`);
-    console.log('group1: ', groups[0]);
   }
 
   useEffect(() => {

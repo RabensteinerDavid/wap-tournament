@@ -2,26 +2,24 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../style/View-Tournament.css';
 import { SingleElimination } from './types-elimination';
-import { GroupPhase } from './types-groups'; // Importiere die neue Komponente
-import { Button } from '@mui/material'
-import { getTournamentsByID } from '../controller/tournamentController';
+import { GroupPhase } from './types-groups';
+import { Fab } from '@mui/material'
+import NavigationIcon from '@mui/icons-material/Navigation'
+import { getTournament } from '../controller/tournamentController';
 
 const ViewTournament = () => {
   const { id } = useParams();
-  const [title, setTitle] = useState();
-  const [view, setView] = useState('elimination'); // Zustand für die aktuelle Ansicht
+  const [title, setTitle] = useState<String>();
+  const [view, setView] = useState('elimination');
 
   useEffect(() => {
 
-
     const fetchTitle = async () => {
       try {
-        console.log("agsdkgasidtasidzt")
-        const idString = "" + id;
-        console.log(id)
-        const data = await getTournament(idString);
-        console.log(data);
-        //setTitle(data);
+        const stringID = "" + id
+        const response = await getTournament(stringID)
+        const title = response.title;
+        setTitle(title);
       } catch (err) {
         console.error('Fehler beim Laden der Namen:', err);
       }
@@ -35,15 +33,30 @@ const ViewTournament = () => {
 
   return (
     <div className="view-tournament-wrapper">
-      <h1>View Tournament {id}</h1>
-      <Button onClick={toggleView} className="toggle-view-button" variant='outlined' color='inherit'>
-        {view === 'elimination' ? 'Switch to Group Phase' : 'Switch to Single Elimination'}
-      </Button>
+      <h1>{title}</h1>
       {view === 'elimination' ? (
         <SingleElimination id={id} />
       ) : (
         <GroupPhase id={id} />
       )}
+      <div className='floating-button'>
+        <Fab
+          onClick={toggleView}
+          variant='extended'
+          sx={{
+            backgroundColor: '#7b00ff5a',
+            color: 'white',
+            "&:hover": {
+              backgroundColor: "#7b00ffc9",
+            },
+          }}
+        >
+          <NavigationIcon sx={{ mr: 1 }} />
+          {view === 'elimination'
+            ? 'Switch to Group Phase'
+            : 'Switch to Single Elimination'}
+        </Fab>
+      </div>
     </div>
   );
 };
