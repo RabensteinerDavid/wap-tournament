@@ -19,6 +19,7 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
 
   const onMatchClickTest = (top: Participant): void => {
     alert(`Match clicked: ${top.name} ${top.id}`);
+    console.log('group1: ', groups[0]);
   }
 
   useEffect(() => {
