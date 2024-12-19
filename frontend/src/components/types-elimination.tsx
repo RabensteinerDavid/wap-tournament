@@ -7,7 +7,7 @@ import {
 } from '@g-loot/react-tournament-brackets'
 import { useWindowSize } from '@uidotdev/usehooks'
 import '../style/StyleElimination.css'
-import { getTournament } from '../controller/tournamentController'
+import { getTournamentBracket } from '../controller/tournamentController'
 import { useEffect, useState } from 'react'
 
 export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
@@ -15,10 +15,11 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
   const size = useWindowSize()
   const finalWidth = (size.width ?? 0) * 2.5 / 3
   const finalHeight = (size.height ?? 0) * 2.5 / 3
-  const [tournaments, setTournaments] = useState<any[]>([]); 
+  const [tournaments, setTournaments] = useState<any[]>([]);
 
   const onMatchClickTest = (top: Participant): void => {
     alert(`Match clicked: ${top.name} ${top.id}`);
+    console.log('group1: ', groups[0]);
   }
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({ id }) => {
 
     const fetchTournaments = async () => {
       try {
-        const data = await getTournament(id);
+        const data = await getTournamentBracket(id);
         setTournaments(data);
       } catch (err) {
         console.error('Fehler beim Laden der Turniere:', err);

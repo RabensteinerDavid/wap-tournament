@@ -1,17 +1,64 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import '../style/View-Tournament.css'
+import '../style/View-Tournament.css';
 import { SingleElimination } from './types-elimination';
+import { GroupPhase } from './types-groups';
+import { Fab } from '@mui/material'
+import NavigationIcon from '@mui/icons-material/Navigation'
+import { getTournament } from '../controller/tournamentController';
 
 const ViewTournament = () => {
-
   const { id } = useParams();
+  const [title, setTitle] = useState<String>();
+  const [view, setView] = useState('elimination');
+
+  useEffect(() => {
+
+    const fetchTitle = async () => {
+      try {
+        const stringID = "" + id
+        const response = await getTournament(stringID)
+        const title = response.title;
+        setTitle(title);
+      } catch (err) {
+        console.error('Fehler beim Laden der Namen:', err);
+      }
+    };
+    fetchTitle();
+  }, [id]);
+
+  const toggleView = () => {
+    setView((prevView) => (prevView === 'elimination' ? 'group' : 'elimination'));
+  };
 
   return (
-    <div className='view-tournament-wrapper'>
-      <h1>View Tournament {id}</h1>
-      <SingleElimination id={id}/>
+    <div className="view-tournament-wrapper">
+      <h1>{title}</h1>
+      {view === 'elimination' ? (
+        <SingleElimination id={id} />
+      ) : (
+        <GroupPhase id={id} />
+      )}
+      <div className='floating-button'>
+        <Fab
+          onClick={toggleView}
+          variant='extended'
+          sx={{
+            backgroundColor: '#7b00ff5a',
+            color: 'white',
+            "&:hover": {
+              backgroundColor: "#7b00ffc9",
+            },
+          }}
+        >
+          <NavigationIcon sx={{ mr: 1 }} />
+          {view === 'elimination'
+            ? 'Switch to Group Phase'
+            : 'Switch to Single Elimination'}
+        </Fab>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default ViewTournament
+export default ViewTournament;
