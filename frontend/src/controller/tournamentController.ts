@@ -33,9 +33,12 @@ export const getTournamentGroups = async (id: string): Promise<any[]> => {
 export const getTournamentsByID = async (userID: string): Promise<Tournament[]> => {
   try {
     const response = await api.get(`/tournaments`)
+
+    console.log(response)
     const filteredTournaments = response.data.filter(
       (tournament: Tournament) => tournament.userId === userID
     )
+    console.log(filteredTournaments)
     return filteredTournaments
   } catch (error) {
     console.error('Fehler beim Laden der Turniere:', error)
