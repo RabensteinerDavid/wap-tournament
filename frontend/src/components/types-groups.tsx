@@ -37,12 +37,9 @@ export const GroupPhase: React.FC<SingleEliminationProps> = ({ id }) => {
                         <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
                             <Card className="group-card" sx={{ marginBottom: 2 }}>
                                 <CardContent>
-                                    {/* Gruppentitel */}
                                     <Typography variant="h5" component="div" gutterBottom>
                                         Group {i + 1}
                                     </Typography>
-
-                                    {/* Teilnehmer anzeigen */}
                                     {group.participants && group.participants.length > 0 ? (
                                         group.participants.map(
                                             (participant: Participant, index: number) => (

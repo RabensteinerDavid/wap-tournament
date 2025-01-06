@@ -3,7 +3,7 @@ import api from '../service/axiosInstance'
 export const login = async (
   email: string,
   password: string
-): Promise<{ success: boolean; data?: any; message?: string }> => {
+): Promise<{ success: boolean; data?: {token: string, refreshToken: string}; message?: string }> => {
   return api
     .post('/login', {
       email,
@@ -18,7 +18,6 @@ export const login = async (
       }
     })
     .catch(error => {
-      // console.error("Error during login:", error);
       return {
         success: false,
         message: error.response.data.error || 'Network error occurred.'
@@ -30,7 +29,7 @@ export const signup = async (
   username: string,
   email: string,
   password: string
-): Promise<{ success: boolean; data?: any; message?: string }> => {
+): Promise<{ success: boolean; data?: string; message?: string }> => {
   return api
     .post('/register', {
       username,
@@ -49,7 +48,6 @@ export const signup = async (
       return { success: false, message: 'Register failed' }
     })
     .catch(error => {
-      // console.error("Error during register:", error);
       return {
         success: false,
         message: error.response.data.error || 'Network error occurred.'
@@ -57,7 +55,7 @@ export const signup = async (
     })
 }
 
-export const getUser = async (): Promise<{ success: boolean; data?: any; message?: string }> => {
+export const getUser = async (): Promise<{ success: boolean; data?: {username: string, email: string, id: string}; message?: string }> => {
   return await api
     .get('/user')
     .then(response => {
@@ -69,7 +67,6 @@ export const getUser = async (): Promise<{ success: boolean; data?: any; message
       }
     })
     .catch(error => {
-      // console.error("Error during login:", error);
       return {
         success: false,
         message: error.response.data.error || 'Network error occurred.'
@@ -77,7 +74,7 @@ export const getUser = async (): Promise<{ success: boolean; data?: any; message
     })
 }
 
-export const acctivateAccount = async (verificationToken: string): Promise<{ success: boolean; data?: any; message?: string }> => {
+export const acctivateAccount = async (verificationToken: string): Promise<{ success: boolean; data?: string; message?: string }> => {
   return await api
     .patch('/verify',{
       verificationToken

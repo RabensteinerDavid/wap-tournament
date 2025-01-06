@@ -201,7 +201,7 @@ const CreateTournament = () => {
       }
       setPreviousParticipantsCount(participants.length)
     }
-  }, [participants])
+  }, [participants, previousParticipantsCount])
 
   return (
     <div className='create-tournament-wrapper'>

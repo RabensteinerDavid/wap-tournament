@@ -195,7 +195,7 @@ declare module '@g-loot/react-tournament-brackets' {
       password: string
     ) => Promise<{ success: boolean; message?: string }>
     logout: () => void
-    getUser: () => Promise<{ success: boolean; data?: string | number | boolean | null | undefined; message?: string }>
+    getUser: () => Promise<{ success: boolean; data?: {username: string, email: string, id: string}; message?: string }>
     accountActivation: (
       token: string
     ) => Promise<AccountActivationResponse>

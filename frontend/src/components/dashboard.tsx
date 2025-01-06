@@ -30,12 +30,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchTournaments()
-  }, [])
+  })
 
   const fetchTournaments = async () => {
     try {
       const user = await getUser()
-      const userID = user.data.id
+      const userID = user?.data?.id || '';
       const data = await getTournamentsByID(userID)
       setTournaments(data)
     } catch (err) {
