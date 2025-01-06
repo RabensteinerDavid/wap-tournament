@@ -9,7 +9,7 @@ import { getTournament } from '../controller/tournamentController';
 
 const ViewTournament = () => {
   const { id } = useParams();
-  const [title, setTitle] = useState<String>();
+  const [title, setTitle] = useState<string>();
   const [view, setView] = useState('elimination');
 
   useEffect(() => {
