@@ -22,6 +22,9 @@ const Header = () => {
           <Button color='inherit' component={Link} to='/home'>
             Home
           </Button>
+          <Button color='inherit' component={Link} to='/view-tournaments'>
+            All Tournaments
+          </Button>
           {isLoggedIn && (
             <>
               <Button color='inherit' component={Link} to='/dashboard'>
