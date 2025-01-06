@@ -35,9 +35,13 @@ const ViewTournament = () => {
     <div className="view-tournament-wrapper">
       <h1>{title}</h1>
       {view === 'elimination' ? (
-        <SingleElimination id={id} />
+        id ? (
+          <SingleElimination id={id} reloadTrigger={0} />
+        ) : (
+          <p>Error: ID is required for Single Elimination.</p>
+        )
       ) : (
-        <GroupPhase id={id} />
+        <GroupPhase id={id || 'default-group-id'} reloadTrigger={0} />
       )}
       <div className='floating-button'>
         <Fab
