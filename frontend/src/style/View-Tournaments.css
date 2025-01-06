@@ -1,9 +1,66 @@
-.view-tournaments-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    text-align: center;
-    flex-direction: column;
-  }
+.tournaments-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 115vh;
+  margin-bottom: 10vh;
+  text-align: center;
+  flex-direction: column;
+}
+
+.tournaments-tournament-accordion h3 {
+  display: inline;
+  margin: 0;
+}
+
+.tournaments-tournament-accordion {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tournaments-tournament-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tournaments-tournament-participants{
+  color: gray;
+}
+
+.tournaments-tournament-participants-wrapper{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+}
+
+.tournaments-message{
+  color: var(--main-color)
+}
+
+.css-1b7cly9-MuiPaper-root-MuiAlert-root .MuiAlert-icon {
+  color: white !important;
+}
+
+.floating-button-wrapper{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.css-djw9hb-MuiButtonBase-root-MuiFab-root{
   
+  background-color: var(--main-color) !important;
+  color: white !important;
+}
+
+.css-nnwbsv-MuiPaper-root-MuiAlert-root .MuiAlert-icon{
+  color: white !important;
+}
+
+.css-nnwbsv-MuiPaper-root-MuiAlert-root{
+  background-color: #d3302f !important;
+}

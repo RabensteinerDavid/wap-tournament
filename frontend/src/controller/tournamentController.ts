@@ -41,6 +41,16 @@ export const getTournamentsByID = async (userID: string): Promise<Tournament[]> 
   }
 }
 
+export const getAllTournaments = async (): Promise<Tournament[]> => {
+  try {
+    const response = await api.get(`/tournaments`)
+    return response.data
+  } catch (error) {
+    console.error('Fehler beim Laden aller Turniere: ', error)
+    throw error
+  }
+}
+
 export const deleteTournamentsByID = async (id: string): Promise<DeleteTournamentResponse> => {
   try {
     const response = await api.delete(`/tournament/${id}`);
