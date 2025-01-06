@@ -7,7 +7,7 @@ declare module '@g-loot/react-tournament-brackets' {
     name?: string
     status?: 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | string | null
     resultText?: string | null
-    [key: string]: any
+    [key: string]: string | number | boolean | null | undefined;
   }
 
   export type Match = {
@@ -20,11 +20,30 @@ declare module '@g-loot/react-tournament-brackets' {
     startTime: string
     state: 'PLAYED' | 'NO_SHOW' | 'WALK_OVER' | 'NO_PARTY' | string
     participants: Participant[]
-    [key: string]: any
+    [key: string]: string | number | boolean | null | undefined;
   }
 
   export interface SingleEliminationProps {
-    id: string | undefined
+    id: string
+    reloadTrigger: number
+  }
+
+  type Participant = {
+    name: string;
+    result: string;  
+  };
+
+  interface Group {
+    id: string;
+    name: string;
+    participants: Participant[];
+    results: string[]; 
+  }
+
+  interface Bracket {
+    id: string;
+    name: string;
+    participants: string[]; 
   }
 
   export type Options = {
@@ -176,7 +195,7 @@ declare module '@g-loot/react-tournament-brackets' {
       password: string
     ) => Promise<{ success: boolean; message?: string }>
     logout: () => void
-    getUser: () => Promise<{ success: boolean; data?: any; message?: string }>
+    getUser: () => Promise<{ success: boolean; data?: string | number | boolean | null | undefined; message?: string }>
     accountActivation: (
       token: string
     ) => Promise<AccountActivationResponse>
@@ -184,7 +203,7 @@ declare module '@g-loot/react-tournament-brackets' {
 
   interface AccountActivationResponse {
     success: boolean
-    data?: any 
+    data?: string | number | boolean | null | undefined; 
     message?: string 
     error?: string 
   }
@@ -195,12 +214,12 @@ declare module '@g-loot/react-tournament-brackets' {
     _id: string
     title: string
     date: string
-    groups: { [key: string]: any }[]
+    groups: { [key: string]: string | number | boolean | null | undefined; }[]
     isGroupPhaseDone: boolean
     participants: string[]
     userId: string
     winner: string | null
-    brackets: any[]
+    brackets: string | number | boolean | null | undefined;[]
   }
 
   interface DeleteModalProps {
@@ -220,11 +239,31 @@ declare module '@g-loot/react-tournament-brackets' {
     message: string;
   }
 
+  interface Group {
+    participants: Participant[];
+    results: string[]; 
+  }
+
+  interface TournamentGroup {
+    participants: string[];
+    results: number[];
+  }
+
   type CreateTournament = {
     title: string;
     participants: string[];
     date: string; 
   };
+
+  interface DeleteTournamentResponse {
+    error: boolean;
+    message: string;
+  }
+
+  interface CreateTournamentResponse {
+    error: boolean;
+    message: string;
+  }
 
   export const SingleEliminationBracket: React.FC<SingleElimLeaderboardProps>
   export const DoubleEliminationBracket: React.FC<DoubleElimLeaderboardProps>

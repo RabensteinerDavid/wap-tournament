@@ -87,6 +87,44 @@ export const themeCreateTournament = createTheme({
   }
 })
 
+export const themeUpdateTournament = createTheme({
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'var(--main-color)'
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'var(--main-color)'
+            },
+          }
+        }
+      }
+    }
+  }
+})
+
+export const pointsUpdateTournament = createTheme({
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'white'
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'white'
+            },
+          }
+        }
+      }
+    }
+  }
+})
+
 export const themeHeader = createTheme({
   components: {
     MuiAppBar: {

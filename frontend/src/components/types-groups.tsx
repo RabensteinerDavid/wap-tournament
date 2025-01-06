@@ -1,16 +1,16 @@
 import {
+    Group,
+    Participant,
     SingleEliminationProps,
-} from '@g-loot/react-tournament-brackets'
-import '../style/StyleElimination.css'
-import '../style/View-Group-Phase.css'
-import { getTournamentGroups } from '../controller/tournamentController'
-import { useEffect, useState } from 'react'
+} from '@g-loot/react-tournament-brackets';
+import '../style/StyleElimination.css';
+import '../style/View-Group-Phase.css';
+import { getTournamentGroups } from '../controller/tournamentController';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid, Container } from '@mui/material';
 
-
 export const GroupPhase: React.FC<SingleEliminationProps> = ({ id }) => {
-
-    const [groups, setGroups] = useState<any[]>([]);
+    const [groups, setGroups] = useState<Group[]>([]);
 
     useEffect(() => {
         if (!id) {
@@ -44,21 +44,34 @@ export const GroupPhase: React.FC<SingleEliminationProps> = ({ id }) => {
 
                                     {/* Teilnehmer anzeigen */}
                                     {group.participants && group.participants.length > 0 ? (
-                                        group.participants.map((participant: any, index: string | number) => (
-                                            <Grid container spacing={2} key={`${i}-${index}`} sx={{ marginBottom: 1 }}>
-                                                <Grid item xs={6}>
-                                                    <Typography variant="h6">
-                                                        {participant || 'No participant name available'}
-                                                    </Typography>
+                                        group.participants.map(
+                                            (participant: Participant, index: number) => (
+                                                <Grid
+                                                    container
+                                                    spacing={2}
+                                                    key={`${i}-${index}`}
+                                                    sx={{ marginBottom: 1 }}
+                                                >
+                                                    <Grid item xs={6}>
+                                                        <Typography variant="h6">
+                                                            {typeof participant === 'string'
+                                                                ? participant
+                                                                : participant?.name || 'No participant name available'}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        {group.results &&
+                                                        group.results[index] !== undefined
+                                                            ? group.results[index]
+                                                            : ''}
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item xs={6}>
-                                                    {group.results && group.results[index] != undefined ? group.results[index] : ''}
-
-                                                </Grid>
-                                            </Grid>
-                                        ))
+                                            )
+                                        )
                                     ) : (
-                                        <Typography variant="body1">No participants available in this group</Typography>
+                                        <Typography variant="body1">
+                                            No participants available in this group
+                                        </Typography>
                                     )}
                                 </CardContent>
                             </Card>
@@ -66,7 +79,7 @@ export const GroupPhase: React.FC<SingleEliminationProps> = ({ id }) => {
                     ))}
                 </Grid>
             ) : (
-                <p>Loading...</p>
+                <p></p>
             )}
         </Container>
     );
