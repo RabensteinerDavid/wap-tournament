@@ -6,9 +6,6 @@ import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
-  Alert,
-  Snackbar,
-  SnackbarCloseReason,
   ThemeProvider
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -16,13 +13,12 @@ import { themeAccordion } from '../style/Theme'
 import { parseISO, format } from 'date-fns'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import DetailModal from './ui/detail-modal'
+import { Tournament } from '@g-loot/react-tournament-brackets'
 
 
 const ViewTournaments = () => {
-  const [tournaments, setTournaments] = useState<any[]>([])
-  const [message, setMessage] = useState('')
-  const [open, setOpen] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [tournaments, setTournaments] = useState<Tournament[]>([])
+  const [, setOpen] = useState(false)
 
   useEffect(() => {
     fetchTournaments()
@@ -32,48 +28,16 @@ const ViewTournaments = () => {
     try {
       const data = await getAllTournaments()
       setTournaments(data)
-      setMessage('Turniere erfolgreich geladen!')
-      setSuccess(true)
       setOpen(true)
     } catch (err) {
       console.error('Fehler beim Laden der Turniere:', err)
-      setMessage('Fehler beim Laden der Turniere.')
-      setSuccess(false)
       setOpen(true)
     }
-  }
-
-  const closeSnackbarMessage = (
-    _event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason
-  ) => {
-    if (reason === 'clickaway') {
-      return
-    }
-    setOpen(false)
   }
 
   return (
     <div className='tournaments-wrapper'>
       <h1>All Tournaments</h1>
-      <Snackbar open={open} autoHideDuration={6000} onClose={closeSnackbarMessage}>
-        {success ? (
-          <Alert
-            onClose={closeSnackbarMessage}
-            sx={{ width: '100%', backgroundColor: '#7b00ff5a', color: 'white' }}
-          >
-            {message}
-          </Alert>
-        ) : (
-          <Alert
-            onClose={closeSnackbarMessage}
-            severity='error'
-            sx={{ width: '100%', backgroundColor: '#FF0E00', color: 'white' }}
-          >
-            {message}
-          </Alert>
-        )}
-      </Snackbar>
       <div className='tournaments'>
         <ThemeProvider theme={themeAccordion}>
           {tournaments

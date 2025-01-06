@@ -19,11 +19,11 @@ import DeleteModal from './ui/delete-modal'
 import { useAuth } from '../utils/auth'
 import EditModal from './ui/edit-modal'
 import FloatingButton from './ui/floating-button'
-import { DeleteResponse } from '@g-loot/react-tournament-brackets'
+import { DeleteResponse, Tournament } from '@g-loot/react-tournament-brackets'
 
 const Dashboard = () => {
   const { getUser } = useAuth()
-  const [tournaments, setTournaments] = useState<any[]>([])
+  const [tournaments, setTournaments] = useState<Tournament[]>([])
   const [message, setMessage] = useState('')
   const [open, setOpen] = useState(false)
   const [success, setSucces] = useState(false)
