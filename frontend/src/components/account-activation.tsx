@@ -1,5 +1,5 @@
-import { useSearchParams } from 'react-router-dom'
-import '../style/account-activation.css'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import '../style/Account-activation.css'
 import { useAuth } from '../utils/auth'
 import { useState } from 'react'
 import { Button, ThemeProvider } from '@mui/material'
@@ -10,12 +10,14 @@ const AccountActivation = () => {
   const [searchParams] = useSearchParams()
   const activationToken = searchParams.get('ACTIVATIONTOKEN')
   const [error, setError] = useState<string>('')
+  const navigate = useNavigate()
 
   const handleAccountActivation = async () => {
     if (activationToken) {
       const response = await accountActivation(activationToken.toString())
       if (response.success) {
         setError('Account activated.')
+        navigate('/signin')
       } else {
         setError(
           response.message || 'An error occurred during account activation.'

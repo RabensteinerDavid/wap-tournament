@@ -8,7 +8,6 @@ import {
 } from '@mui/material'
 import { themeHeader } from '../style/Theme'
 import { useAuth } from '../utils/auth'
-import '../style/Header.css'
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth()

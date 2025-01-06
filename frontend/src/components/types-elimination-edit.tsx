@@ -138,7 +138,6 @@ import {
   
     return (
       <div className='elimination-wrapper'>
-        {/* Modal for changing points */}
         <Modal
           open={open}
           onClose={handleClose}
@@ -264,7 +263,6 @@ import {
             )}
           />
         ) : (
-          // <div className='loading'>No tournament found...</div>
           <div className='loading'></div>
         )}
       </div>

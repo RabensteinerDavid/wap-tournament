@@ -10,6 +10,7 @@ import api from '../service/axiosInstance'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
@@ -42,7 +43,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       } else {
         return { success: false, message: result.message || 'Login failed' }
       }
-    } catch (error) {
+    } catch {
       return { success: false, message: 'An error occurred during login' }
     }
   }
@@ -59,12 +60,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       } else {
         return { success: false, message: result.message || 'Signup failed' }
       }
-    } catch (error) {
+    } catch {
       return { success: false, message: 'An error occurred during signup' }
     }
   }
 
-const getUser = async (): Promise<{ success: boolean; data?: any; message?: string }> => {
+const getUser = async (): Promise<{ success: boolean; data?: {username: string, email: string, id: string}; message?: string }> => {
     try {
       const response = await userService();
       return response;
@@ -75,7 +76,7 @@ const getUser = async (): Promise<{ success: boolean; data?: any; message?: stri
     }
   }
 
-  const accountActivation = async (verificationToken: string): Promise<{ success: boolean; data?: any; message?: string }> => {
+  const accountActivation = async (verificationToken: string): Promise<{ success: boolean; data?: string; message?: string }> => {
     try {
       const response = await accountActivationService(verificationToken);
       if (response.success) {

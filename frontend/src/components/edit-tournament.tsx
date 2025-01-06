@@ -6,7 +6,6 @@ import {
   getTournament,
   updateTournament
 } from '../controller/tournamentController'
-import { SingleElimination } from './types-elimination'
 import { GroupPhaseEdit } from './types-groups-edit'
 import {
   Fab,
@@ -19,6 +18,7 @@ import {
 import NavigationIcon from '@mui/icons-material/Navigation'
 import { themeUpdateTournament } from '../style/Theme'
 import EditIcon from '@mui/icons-material/Edit'
+import { SingleEliminationEdit } from './types-elimination-edit'
 
 const EditTournament = () => {
   const { id } = useParams()
@@ -70,7 +70,6 @@ const EditTournament = () => {
     const updatedParticipants = [...participants]
     const newName = event.target.value.trim()
   
-    // Check for duplicate names
     const isDuplicate = updatedParticipants.some(
       (participant, idx) => participant === newName && idx !== index
     )
@@ -80,7 +79,6 @@ const EditTournament = () => {
       return
     }
   
-    // Update participant name
     updatedParticipants[index] = newName
     setParticipants(updatedParticipants)
     setEditingIndex(null)
@@ -191,14 +189,12 @@ const EditTournament = () => {
         The group phase has to be finished before elimination bracket can begin.
       </Typography>
 
-      {/* ID-Prüfung */}
       {!id ? (
         <div>Fehler: Keine gültige ID gefunden.</div>
       ) : (
         <>
-          {/* Dynamische Anzeige basierend auf `view` */}
           {view === 'elimination' ? (
-            <SingleElimination id={id} reloadTrigger={reloadTrigger} />
+            <SingleEliminationEdit id={id} reloadTrigger={reloadTrigger} />
           ) : (
             <GroupPhaseEdit id={id} reloadTrigger={reloadTrigger} />
           )}

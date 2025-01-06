@@ -18,16 +18,17 @@ import AccountActivation from '../components/account-activation'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
+      {/* default route */}
+      <Route index element={<Home />} />
       <Route element={<Protected />}>
         {/* insert protected routes here */}
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/create-tournament' element={<CreateTournament />} />
         <Route path='/edit-tournament/:id' element={<EditTournament />} />
-        {/* Example route for the preview of the elimnation pages */}
       </Route>
       <Route path='/view-tournament/:id' element={<ViewTournament />} />
       <Route path='/view-tournaments' element={<ViewTournaments />} />
-      <Route path="/activate" element={<AccountActivation />} />
+      <Route path='/activate' element={<AccountActivation />} />
       <Route path='home' element={<Home />} />
       <Route path='signin' element={<Signin />} />
       <Route path='signup' element={<Signup />} />
