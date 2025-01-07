@@ -41,10 +41,10 @@ jobs:
 
       # install dependencies
       - name: Install dependencies for backend
-        working-directory: ./backend
+        working-directory: ../../backend
         run: npm install
 
       # run the tests
       - name: Run Jest Tests in backend
-        working-directory: ./backend
+        working-directory: ../../backend
         run: npm t
