@@ -23,6 +23,30 @@ declare module '@g-loot/react-tournament-brackets' {
     [key: string]: string | number | boolean | null | undefined;
   }
 
+  export interface MatchDetails {
+    matchID: string
+    topPartyPoints: number
+    bottomPartyPoints: number
+    topPartyName: string
+    bottomPartyName: string
+    topPartyId: string
+    bottomPartyId: string
+    topWinner: boolean
+    bottomWinner: boolean
+  }
+
+  export interface MatchClickParams {
+    top: Participant
+    topName: string
+    bottom: Participant
+    bottomName: string
+    bottomId: string
+    topId: string
+    matchID: string
+    winnerTop: boolean
+    winnerBottom: boolean
+  }
+
   export interface SingleEliminationProps {
     id: string
     reloadTrigger: number

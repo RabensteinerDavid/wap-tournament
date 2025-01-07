@@ -1,83 +1,102 @@
 import {
-    Group,
-    Participant,
-    SingleEliminationProps,
-} from '@g-loot/react-tournament-brackets';
-import '../style/StyleElimination.css';
-import '../style/View-Group-Phase.css';
-import { getTournamentGroups } from '../controller/tournamentController';
-import { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid, Container } from '@mui/material';
+  Group,
+  Participant,
+  SingleEliminationProps
+} from '@g-loot/react-tournament-brackets'
+import '../style/StyleElimination.css'
+import '../style/View-Group-Phase.css'
+import { getTournamentGroups } from '../controller/tournamentController'
+import { useEffect, useState } from 'react'
+import {
+  Card,
+  CardContent,
+  Typography,
+  Grid2 as Grid,
+  Container
+} from '@mui/material'
+import Lottie from 'lottie-react'
+import loadingAnimation from '../assets/loading.json'
 
 export const GroupPhase: React.FC<SingleEliminationProps> = ({ id }) => {
-    const [groups, setGroups] = useState<Group[]>([]);
+  const [groups, setGroups] = useState<Group[]>([])
 
-    useEffect(() => {
-        if (!id) {
-            console.error('Keine Turnier-ID vorhanden!');
-            return;
-        }
+  useEffect(() => {
+    if (!id) {
+      console.error('Keine Turnier-ID vorhanden!')
+      return
+    }
 
-        const fetchTournaments = async () => {
-            try {
-                const data = await getTournamentGroups(id);
-                setGroups(data);
-            } catch (err) {
-                console.error('Fehler beim Laden des Turniers', err);
-            }
-        };
-        fetchTournaments();
-    }, [id]);
+    const fetchTournaments = async () => {
+      try {
+        const data = await getTournamentGroups(id)
+        setGroups(data)
+      } catch (err) {
+        console.error('Fehler beim Laden des Turniers', err)
+      }
+    }
+    fetchTournaments()
+  }, [id])
 
-    return (
-        <Container className="groups-wrapper">
-            {groups.length > 0 ? (
-                <Grid container spacing={3}>
-                    {groups.map((group, i) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-                            <Card className="group-card" sx={{ marginBottom: 2 }}>
-                                <CardContent>
-                                    <Typography variant="h5" component="div" gutterBottom>
-                                        Group {i + 1}
-                                    </Typography>
-                                    {group.participants && group.participants.length > 0 ? (
-                                        group.participants.map(
-                                            (participant: Participant, index: number) => (
-                                                <Grid
-                                                    container
-                                                    spacing={2}
-                                                    key={`${i}-${index}`}
-                                                    sx={{ marginBottom: 1 }}
-                                                >
-                                                    <Grid item xs={6}>
-                                                        <Typography variant="h6">
-                                                            {typeof participant === 'string'
-                                                                ? participant
-                                                                : participant?.name || 'No participant name available'}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        {group.results &&
-                                                        group.results[index] !== undefined
-                                                            ? group.results[index]
-                                                            : ''}
-                                                    </Grid>
-                                                </Grid>
-                                            )
-                                        )
-                                    ) : (
-                                        <Typography variant="body1">
-                                            No participants available in this group
-                                        </Typography>
-                                    )}
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            ) : (
-                <p></p>
-            )}
-        </Container>
-    );
-};
+  return (
+    <Container className='groups-wrapper'>
+      {groups.length > 0 ? (
+        <Grid container spacing={4}>
+          {groups.map((group, groupIndex) => (
+            <Grid key={groupIndex} size={{ xs: 12, md: 6 }}>
+              <Card className='group-card'>
+                <CardContent>
+                  <Typography variant='h5' component='div' gutterBottom>
+                    Group {groupIndex + 1}
+                  </Typography>
+                  {group.participants && group.participants.length > 0 && (
+                    <>
+                      {group.participants.map(
+                        (
+                          participant: Participant,
+                          participantIndex: number
+                        ) => (
+                          <Grid
+                            container
+                            alignItems='center'
+                            justifyContent='center'
+                            key={participantIndex}
+                            minHeight={40}
+                          >
+                            <Grid size={{ xs: 4, md: 6 }}>
+                              <Typography variant='h6' align='center'>
+                                {typeof participant === 'string'
+                                  ? participant
+                                  : participant?.name ||
+                                    'No participant name available'}
+                              </Typography>
+                            </Grid>
+                            <Grid size={{ xs: 4, md: 6 }}>
+                              <Typography variant='body1'>
+                                {group.results &&
+                                group.results[participantIndex] !== undefined
+                                  ? group.results[participantIndex]
+                                  : ''}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        )
+                      )}
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <div className='lottie-loading-wrapper'>
+          <Lottie
+            animationData={loadingAnimation}
+            style={{ width: '40%' }}
+            loop={true}
+          />
+        </div>
+      )}
+    </Container>
+  )
+}

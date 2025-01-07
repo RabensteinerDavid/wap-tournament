@@ -27,7 +27,7 @@ const Header = () => {
           {isLoggedIn && (
             <>
               <Button color='inherit' component={Link} to='/dashboard'>
-                Dashboard
+                My tournaments
               </Button>
               <Button color='inherit' onClick={logout}>
                 Logout
