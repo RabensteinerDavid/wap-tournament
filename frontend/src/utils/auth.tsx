@@ -93,6 +93,7 @@ const getUser = async (): Promise<{ success: boolean; data?: {username: string, 
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
     setIsLoggedIn(false)
   }
 
