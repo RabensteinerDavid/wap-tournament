@@ -478,6 +478,9 @@ export class WtpController {
                         bracket = this.resetWinner(bracket);
                     }
                     
+                    //resets the winner of the tournament
+                    tournament.winner = null;
+
                     tournament = await this.dbCommunicatorService.updateTournament(tournament);
                     return res.send(tournament);
                 } else {
@@ -502,10 +505,16 @@ export class WtpController {
     }
 
     setWinner(bracket, participantIndex, pointsWinner, pointsLoser) {
-        bracket.participants[participantIndex == 0 ? 0 : 1].isWinner = false;
-        bracket.participants[participantIndex == 0 ? 0 : 1].resultText = pointsLoser.toString();
-        bracket.participants[participantIndex == 0 ? 1 : 0].isWinner = true;
-        bracket.participants[participantIndex == 0 ? 1 : 0].resultText = pointsWinner.toString();
+        const winnerIndex = participantIndex;
+        const loserIndex = participantIndex == 0 ? 1 : 0;
+        
+        // set loser
+        bracket.participants[loserIndex].isWinner = false;
+        bracket.participants[loserIndex].resultText = pointsLoser.toString();
+        
+        // set winner
+        bracket.participants[winnerIndex].isWinner = true;
+        bracket.participants[winnerIndex].resultText = pointsWinner.toString();
         
         return bracket;
     }
@@ -553,7 +562,8 @@ export class WtpController {
         for (let i = 0; i < bracket.participants.length; i++) {
             if (bracket.participants[i].id == participantId) {
                 const participant = bracket.participants[i];
-                return {participant, i}
+                const participantsIndex = i;
+                return {participant, participantsIndex}
             }
         }
     }

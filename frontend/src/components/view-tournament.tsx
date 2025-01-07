@@ -11,6 +11,7 @@ const ViewTournament = () => {
   const { id } = useParams();
   const [title, setTitle] = useState<string>();
   const [view, setView] = useState('elimination');
+  const [groupPhase, setGroupPhaseDone] = useState<boolean>(false)
 
   useEffect(() => {
 
@@ -19,6 +20,7 @@ const ViewTournament = () => {
         const stringID = "" + id
         const response = await getTournament(stringID)
         const title = response.title;
+        setGroupPhaseDone(response.isGroupPhaseDone)
         setTitle(title);
       } catch (err) {
         console.error('Fehler beim Laden der Namen:', err);
@@ -27,13 +29,18 @@ const ViewTournament = () => {
     fetchTitle();
   }, [id]);
 
+  useEffect(() => {
+    const isGroupPhaseDone = groupPhase ? "elimination" : "group"
+    setView(isGroupPhaseDone)
+  }, [groupPhase])
+
   const toggleView = () => {
     setView((prevView) => (prevView === 'elimination' ? 'group' : 'elimination'));
   };
 
   return (
     <div className="view-tournament-wrapper">
-      <h1>{title}</h1>
+      <h1>{title || "Loading"}</h1>
       {view === 'elimination' ? (
         id ? (
           <SingleElimination id={id} reloadTrigger={0} />
@@ -57,8 +64,8 @@ const ViewTournament = () => {
         >
           <NavigationIcon sx={{ mr: 1 }} />
           {view === 'elimination'
-            ? 'Switch to Group Phase'
-            : 'Switch to Single Elimination'}
+            ? 'Show Group Phase'
+            : 'Show Single Elimination'}
         </Fab>
       </div>
     </div>

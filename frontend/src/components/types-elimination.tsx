@@ -9,14 +9,16 @@ import { useWindowSize } from '@uidotdev/usehooks'
 import '../style/StyleElimination.css'
 import { getTournamentBracket } from '../controller/tournamentController'
 import { useEffect, useState } from 'react'
+import Lottie from 'lottie-react'
+import loadingAnimation from '../assets/loading.json'
 
 export const SingleElimination: React.FC<SingleEliminationProps> = ({
   id,
   reloadTrigger
 }) => {
   const size = useWindowSize()
-  const finalWidth = ((size.width ?? 0) * 2.5) / 3
-  const finalHeight = ((size.height ?? 0) * 2.5) / 3
+  const finalWidth = ((size.width ?? 0) * 2.5) / 4
+  const finalHeight = ((size.height ?? 0) * 2.5) / 4
   const [tournaments, setTournaments] = useState<Match[]>([])
 
   useEffect(() => {
@@ -79,7 +81,13 @@ export const SingleElimination: React.FC<SingleEliminationProps> = ({
           )}
         />
       ) : (
-        <div className='loading'></div>
+        <div className='lottie-loading-wrapper'>
+          <Lottie
+            animationData={loadingAnimation}
+            style={{ width: '40%' }}
+            loop={true}
+          />
+        </div>
       )}
     </div>
   )

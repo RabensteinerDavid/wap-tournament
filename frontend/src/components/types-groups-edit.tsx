@@ -14,16 +14,18 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid,
   Container,
   TextField,
   ThemeProvider,
   Snackbar,
   Alert,
-  SnackbarCloseReason
+  SnackbarCloseReason,
+  Grid2 as Grid
 } from '@mui/material'
 import { pointsUpdateTournament } from '../style/Theme'
 import axios from 'axios'
+import Lottie from 'lottie-react'
+import loadingAnimation from '../assets/loading.json'
 
 export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
   id,
@@ -37,6 +39,7 @@ export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
   const [tempResult, setTempResult] = useState<string | null>(null)
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [snackbarMessage, setSnackbarMessage] = useState<string>('')
+  const [previousValue, setPreviousValue] = useState<string | null>(null)
 
   useEffect(() => {
     if (!id) {
@@ -62,6 +65,7 @@ export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
   ) => {
     setEditing({ groupIndex, participantIndex })
     setTempResult(currentValue || '')
+    setPreviousValue(currentValue || '')
   }
 
   const handleBlur = async () => {
@@ -75,12 +79,15 @@ export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
       }
 
       const points = parseInt(tempResult || '0', 10)
+      const previousPoints = parseInt(previousValue || '0', 10)
+      const pointsNew = points - previousPoints
+
       try {
         await changePointsParticipant(
           id,
           String(editing.groupIndex),
           String(editing.participantIndex),
-          points
+          pointsNew
         )
         const updatedGroups = [...groups]
         updatedGroups[editing.groupIndex].results[editing.participantIndex] =
@@ -101,8 +108,8 @@ export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTempResult(e.target.value)
+  const handleChange = (newPoints: string) => {
+    setTempResult(newPoints)
   }
 
   const closeSnackbar = (
@@ -132,69 +139,78 @@ export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
       </Snackbar>
       <ThemeProvider theme={pointsUpdateTournament}>
         {groups.length > 0 ? (
-          <Grid container spacing={3}>
+          <Grid container spacing={4}>
             {groups.map((group, groupIndex) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={groupIndex}>
-                <Card className='group-card' sx={{ marginBottom: 2 }}>
+              <Grid key={groupIndex} size={{ xs: 12, md: 6 }}>
+                <Card className='group-card'>
                   <CardContent>
                     <Typography variant='h5' component='div' gutterBottom>
                       Group {groupIndex + 1}
                     </Typography>
-                    {group.participants && group.participants.length > 0 ? (
-                      group.participants.map(
-                        (
-                          participant: Participant,
-                          participantIndex: number
-                        ) => (
-                          <Grid
-                            container
-                            spacing={2}
-                            key={`${groupIndex}-${participantIndex}`}
-                            sx={{ marginBottom: 1 }}
-                          >
-                            <Grid item xs={6}>
-                              <Typography variant='h6'>
-                                {typeof participant === 'string'
-                                  ? participant
-                                  : participant?.name ||
-                                    'No participant name available'}
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              {editing &&
-                              editing.groupIndex === groupIndex &&
-                              editing.participantIndex === participantIndex ? (
-                                <TextField
-                                  value={tempResult || ''}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                  autoFocus
-                                />
-                              ) : (
-                                <Typography
-                                  variant='body1'
-                                  onDoubleClick={() =>
-                                    handleDoubleClick(
-                                      groupIndex,
-                                      participantIndex,
-                                      group.results[participantIndex]
-                                    )
-                                  }
-                                >
-                                  {group.results &&
-                                  group.results[participantIndex] !== undefined
-                                    ? group.results[participantIndex]
-                                    : ''}
+                    {group.participants && group.participants.length > 0 && (
+                      <>
+                        {group.participants.map(
+                          (
+                            participant: Participant,
+                            participantIndex: number
+                          ) => (
+                            <Grid
+                              container
+                              alignItems='center'
+                              justifyContent='center'
+                              key={participantIndex}
+                              minHeight={40}
+                            >
+                              <Grid size={{ xs: 4, md: 6 }}>
+                                <Typography variant='h6' align='center'>
+                                  {typeof participant === 'string'
+                                    ? participant
+                                    : participant?.name ||
+                                      'No participant name available'}
                                 </Typography>
-                              )}
+                              </Grid>
+                              <Grid size={{ xs: 4, md: 6 }}>
+                                {editing &&
+                                editing.groupIndex === groupIndex &&
+                                editing.participantIndex ===
+                                  participantIndex ? (
+                                  <TextField
+                                    size='small'
+                                    type='number'
+                                    value={tempResult || ''}
+                                    onChange={e => handleChange(e.target.value)}
+                                    onBlur={handleBlur}
+                                    autoFocus
+                                    fullWidth
+                                    slotProps={{
+                                      htmlInput: {
+                                        min: 0
+                                      }
+                                    }}
+                                  />
+                                ) : (
+                                  <Typography
+                                    variant='body1'
+                                    onDoubleClick={() =>
+                                      handleDoubleClick(
+                                        groupIndex,
+                                        participantIndex,
+                                        group.results[participantIndex]
+                                      )
+                                    }
+                                  >
+                                    {group.results &&
+                                    group.results[participantIndex] !==
+                                      undefined
+                                      ? group.results[participantIndex]
+                                      : ''}
+                                  </Typography>
+                                )}
+                              </Grid>
                             </Grid>
-                          </Grid>
-                        )
-                      )
-                    ) : (
-                      <Typography variant='body1'>
-                        No participants available in this group
-                      </Typography>
+                          )
+                        )}
+                      </>
                     )}
                   </CardContent>
                 </Card>
@@ -202,7 +218,13 @@ export const GroupPhaseEdit: React.FC<SingleEliminationProps> = ({
             ))}
           </Grid>
         ) : (
-          <p></p>
+          <div className='lottie-loading-wrapper'>
+            <Lottie
+              animationData={loadingAnimation}
+              style={{ width: '40%' }}
+              loop={true}
+            />
+          </div>
         )}
       </ThemeProvider>
     </Container>

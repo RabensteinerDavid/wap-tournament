@@ -13,7 +13,10 @@ import {
   Box,
   Typography,
   TextField,
-  ThemeProvider
+  ThemeProvider,
+  Snackbar,
+  Alert,
+  SnackbarCloseReason
 } from '@mui/material'
 import NavigationIcon from '@mui/icons-material/Navigation'
 import { themeUpdateTournament } from '../style/Theme'
@@ -25,10 +28,13 @@ const EditTournament = () => {
   const [title, setTitle] = useState<string | undefined>()
   const [participants, setParticipants] = useState<string[]>([])
   const [isOpen, setOpen] = useState<boolean>(false)
+  const [groupPhase, setGroupPhaseDone] = useState<boolean>(false)
   const [view, setView] = useState<'elimination' | 'group'>('group')
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [reloadTrigger, setReloadTrigger] = useState<number>(0)
   const [errorGroupPhase, setErrorGroupPhase] = useState<string | null>(null)
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('')
 
   useEffect(() => {
     const fetchTournamentData = async () => {
@@ -37,12 +43,18 @@ const EditTournament = () => {
         const response = await getTournament(id)
         setTitle(response.title)
         setParticipants(response.participants || [])
+        setGroupPhaseDone(response.isGroupPhaseDone)
       } catch (err) {
         console.error('Error loading tournament data:', err)
       }
     }
     fetchTournamentData()
-  }, [id])
+  }, [id, reloadTrigger, groupPhase])
+
+  useEffect(() => {
+    const isGroupPhaseDone = groupPhase ? 'elimination' : 'group'
+    setView(isGroupPhaseDone)
+  }, [reloadTrigger, groupPhase])
 
   const toggleDrawer = (open: boolean) => () => {
     setOpen(open)
@@ -53,6 +65,10 @@ const EditTournament = () => {
   }
 
   const handleDoubleClick = (index: number) => {
+    setSnackbarOpen(true)
+    setSnackbarMessage(
+      'If you change the names of the participants the points of the tournament get reseted'
+    )
     setEditingIndex(index)
   }
   const handleGroupPhase = async () => {
@@ -69,21 +85,27 @@ const EditTournament = () => {
   ) => {
     const updatedParticipants = [...participants]
     const newName = event.target.value.trim()
-  
+
+    if (updatedParticipants[index] === newName) {
+      setEditingIndex(null)
+      setErrorGroupPhase(null)
+      return
+    }
+
     const isDuplicate = updatedParticipants.some(
       (participant, idx) => participant === newName && idx !== index
     )
-  
+
     if (isDuplicate) {
       setErrorGroupPhase(`Der Name "${newName}" ist bereits vergeben.`)
       return
     }
-  
+
     updatedParticipants[index] = newName
     setParticipants(updatedParticipants)
     setEditingIndex(null)
     setErrorGroupPhase(null)
-  
+
     try {
       if (id && title) {
         const currentDate = new Date().toISOString()
@@ -95,6 +117,16 @@ const EditTournament = () => {
     } catch (err) {
       console.error('Error updating participants:', err)
     }
+  }
+
+  const closeSnackbar = (
+    _event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSnackbarOpen(false)
   }
 
   const participantsList = () => (
@@ -151,9 +183,7 @@ const EditTournament = () => {
       ))}
       <div className='finish-group-phase-button'>
         {errorGroupPhase && (
-          <Typography sx={{ color: 'red' }}>
-            {errorGroupPhase}
-          </Typography>
+          <Typography sx={{ color: 'red' }}>{errorGroupPhase}</Typography>
         )}
         <Fab
           onClick={handleGroupPhase}
@@ -175,7 +205,7 @@ const EditTournament = () => {
   return (
     <div className='edit-tournament-wrapper'>
       <h1>
-        {title || 'No tournament found with this id'}{' '}
+        {title || 'Loading'}{' '}
         {title && (
           <EditIcon className='edit-button' onClick={toggleDrawer(true)}>
             Open Sidebar
@@ -231,11 +261,24 @@ const EditTournament = () => {
           >
             <NavigationIcon sx={{ mr: 1 }} />
             {view === 'elimination'
-              ? 'Switch to Group Phase'
-              : 'Switch to Single Elimination'}
+              ? 'Show Group Phase'
+              : 'Show Single Elimination'}
           </Fab>
         </div>
       )}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={closeSnackbar}
+      >
+        <Alert
+          onClose={closeSnackbar}
+          severity='error'
+          sx={{ width: '100%', backgroundColor: '#FF0E00', color: 'white' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

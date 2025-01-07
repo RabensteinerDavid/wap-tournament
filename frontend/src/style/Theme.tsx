@@ -98,7 +98,7 @@ export const themeUpdateTournament = createTheme({
             },
             '&.Mui-focused fieldset': {
               borderColor: 'var(--main-color)'
-            },
+            }
           }
         }
       }
@@ -118,6 +118,9 @@ export const pointsUpdateTournament = createTheme({
             '&.Mui-focused fieldset': {
               borderColor: 'white'
             },
+            '& input': {
+              color: 'white'
+            }
           }
         }
       }
@@ -143,7 +146,7 @@ export const themeAccordion = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#1e1e1e',
-          color: 'white',
+          color: 'white'
         }
       }
     }
