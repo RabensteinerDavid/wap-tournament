@@ -157,9 +157,13 @@ export const SingleEliminationEdit: React.FC<SingleEliminationProps> = ({
   const resetWinner = async () => {
     if (matchDetails) {
       try {
-        await resetWinnerBracket(id, matchDetails.matchID)
+        const response = await resetWinnerBracket(id, matchDetails.matchID)
         setReset(false)
         setLocalReloadTrigger(prev => prev + 1)
+        if (!response.success) {
+          setSnackbarMessage(response.message?.toString() || '')
+          setSnackbarOpen(true)
+        }
       } catch (error) {
         console.error('Error saving points:', error)
       }
