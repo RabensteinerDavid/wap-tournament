@@ -8,8 +8,11 @@ on:
   
   push:
     branches:
-      - feature/back-testing
-      - develop
+      - 'feature/**'
+      - 'hotfix/**'
+      - 'release/**'
+      - 'develop'
+      - 'main'
   
   workflow_dispatch:
 
