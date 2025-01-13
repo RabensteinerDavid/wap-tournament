@@ -84,7 +84,11 @@ export const createTournament = async (
 ): Promise<CreateTournamentResponse> => {
   try {
     const response = await api.post('/tournament', tournament)
-    return response.data
+    return {
+      error: false,
+      message: 'Tournament created successfully',
+      tournamentID: response.data._id
+    }
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return {
@@ -177,7 +181,7 @@ export const setWinnerBracket = async (
         pointsLoser
       }
     )
-    return {success: true}
+    return { success: true }
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return { success: false, message: error.response.data.error }
@@ -188,15 +192,15 @@ export const setWinnerBracket = async (
 
 export const resetWinnerBracket = async (
   id: string,
-  bracketID: string,
-): Promise<Tournament> => {
+  bracketID: string
+): Promise<{ success: boolean; message?: string }> => {
   try {
-    const response = await api.patch(
-      `/tournament/${id}/bracket/${bracketID}/resetwinners`,
-    )
-    return response.data
+    await api.patch(`/tournament/${id}/bracket/${bracketID}/resetwinners`)
+    return { success: true }
   } catch (error) {
-    console.error('Fehler beim Laden der Turniere:', error)
-    throw error
+    if (axios.isAxiosError(error) && error.response) {
+      return { success: false, message: error.response.data.error }
+    }
+    return { success: false, message: 'An unexpected error occurred' }
   }
 }

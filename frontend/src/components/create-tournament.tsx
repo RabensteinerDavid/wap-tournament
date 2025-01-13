@@ -147,7 +147,7 @@ const CreateTournament = () => {
       setTitle('')
       setParticipants(defaultParticipants)
       setSelectedDate(null)
-      navigate('/dashboard')
+      navigate('/edit-tournament/' + response.tournamentID)
     } else {
       setOpen(true)
       setError(response.message)

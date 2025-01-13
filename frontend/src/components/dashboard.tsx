@@ -136,6 +136,14 @@ const Dashboard = () => {
                         {tournament.participants.join(', ')}
                       </p>
                     </span>
+                    {tournament.winner && (
+                      <span className='dashboard-tournament-participants-wrapper'>
+                        Winner:{' '}
+                        <p className='dashboard-tournament-participants'>
+                          {tournament.winner}
+                        </p>
+                      </span>
+                    )}
                   </AccordionDetails>
                   <AccordionActions>
                     <EditModal
