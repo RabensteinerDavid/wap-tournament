@@ -1,0 +1,17 @@
+.view-tournament-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.css-zow5z4-MuiGrid-root {
+  margin-top: 0 !important
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}

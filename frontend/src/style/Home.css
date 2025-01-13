@@ -1,0 +1,22 @@
+.home-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  text-align: center;
+  flex-direction: column;
+}
+
+.home-wrapper-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+}
+
+.button-wrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

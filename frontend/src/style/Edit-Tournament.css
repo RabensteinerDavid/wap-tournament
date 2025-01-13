@@ -1,0 +1,16 @@
+.edit-tournament-wrapper {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+  text-align: center;
+  flex-direction: column;
+}
+
+.finish-group-phase-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-top: 5px;
+  flex-direction: column;
+}

@@ -1,0 +1,59 @@
+name: WAP Workflow - Jest Tests
+
+on:
+  # automatic at pull request :)
+  pull_request:
+    branches:
+      - '**' # all branches
+  
+  push:
+    branches:
+      - 'feature/**'
+      - 'hotfix/**'
+      - 'release/**'
+      - 'develop'
+      - 'main'
+  
+  workflow_dispatch:
+
+defaults: 
+  run:
+    shell: bash
+    working-directory: ./backend
+
+env:
+  DATABASE_CONNECTION_STRING: ${{ secrets.DATABASE_CONNECTION_STRING }}
+  DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+  JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  SERVER_PORT: ${{ secrets.SERVER_PORT }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Debug backend directory
+        working-directory: ./backend
+        run: |
+          echo "Listing contents of backend directory:"
+          ls -la
+
+      # setup node
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache-dependency-path: './backend/package-lock.json'
+          node-version: '18'
+          cache: 'npm'
+
+      # install dependencies
+      - name: Install dependencies for backend
+        run: npm install
+
+      # run the tests
+      - name: Run Jest Tests in backend
+        run: npm t
